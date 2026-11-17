@@ -18,7 +18,7 @@ The private permission image is not included in this repository.
 
 ## Reference Release
 
-The [v1.0.0 Release](https://github.com/Hugo-bordas/irish-energy-forecast-ai/releases/tag/v1.0.0)
+The [v1.0.0 Release](https://github.com/Hugo-bordas/Ireland-Electricity-Demand-Forecasting/releases/tag/v1.0.0)
 contains the reviewed assets
 `RandomForest.joblib`, `test_predictions.csv`, `example_request.json`,
 `DATA_TERMS.md` and `SHA256SUMS`. Sizes and SHA-256 digests of the three installable
@@ -27,8 +27,9 @@ assets are in
 outside Git. The terms accompany the assets.
 
 The manifest's legal review is recorded as cleared within the supplied permission's
-scope. The owner authorized distribution from `Hugo-bordas/irish-energy-forecast-ai`
-at the pinned tag `v1.0.0`. The downloader verifies the reference assets and metadata;
+scope. The repository was published under `Hugo-bordas/irish-energy-forecast-ai`
+and is now named `Hugo-bordas/Ireland-Electricity-Demand-Forecasting`.
+The pinned tag remains `v1.0.0`. The downloader verifies the reference assets and metadata;
 it does not load models or train them.
 
 ## Excluded

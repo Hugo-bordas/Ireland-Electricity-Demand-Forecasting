@@ -1,4 +1,6 @@
-# Irish Energy Forecast AI
+# Ireland electricity demand forecasting
+
+[Try locally](#try-the-dashboard) · [Results](#reference-results) · [Model Release](https://github.com/Hugo-bordas/Ireland-Electricity-Demand-Forecasting/releases/tag/v1.0.0) · [Deployment assessment](docs/STREAMLIT_DEPLOYMENT.md)
 
 Hourly electricity demand forecasting for Ireland: 24 independent prediction
 models, chronological evaluation, a Streamlit dashboard and a FastAPI service.
@@ -15,6 +17,40 @@ EirGrid permission supplied by the owner expressly covers those materials and th
 trained models for this project. See [data terms](docs/DATA_TERMS.md). The code is
 MIT; that license does not relicense the data or model assets.
 
+## At a glance
+
+- Random Forest test MAE: **78.44 MW**, compared with **120.93 MW** for the previous-week baseline (35.1% lower MAE).
+- Evaluation covers **4,149 forecast origins × 24 hours** in January–June 2020. Model selection uses 2019 validation data only.
+- Explore the saved forecasts locally without training, credentials or the 161 MiB model download.
+
+![Streamlit overview: test MAE 78.44 MW, RMSE 117.16 MW and 4,149 origins](docs/images/overview.jpg)
+
+## Try the dashboard
+
+Use Python 3.13 and Git. Run:
+
+```bash
+git clone https://github.com/Hugo-bordas/Ireland-Electricity-Demand-Forecasting.git
+cd Ireland-Electricity-Demand-Forecasting
+python3.13 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r dashboard/requirements.txt
+python -m streamlit run dashboard/app.py
+```
+
+On Windows, use `py -3.13 -m venv .venv` and `.venv\Scripts\Activate.ps1`
+in PowerShell instead of the two environment commands above.
+Open [localhost:8501](http://localhost:8501).
+
+Start with **Forecast Explorer** to compare a saved 24-hour forecast with observed
+demand and export its rows. Change the date and hour, then open **Model Performance**
+to compare validation and test errors. Overview and Methodology explain the data
+and chronological split. All 4,149 origins remain available, including large errors.
+
+This is a historical demonstration, not a live demand service. No hosted demo is
+currently verified. See the [Streamlit deployment assessment](docs/STREAMLIT_DEPLOYMENT.md)
+for the proposed Community Cloud setup and remaining checks.
+
 ## Reference results
 
 Random Forest was selected by validation MAE in 2019. It was trained on 2015 to
@@ -28,7 +64,9 @@ Random Forest was selected by validation MAE in 2019. It was trained on 2015 to
 | Random Forest | 67.27 | 102.41 | 78.44 | 117.16 |
 | HistGradientBoosting | 67.71 | 101.11 | Not evaluated | Not evaluated |
 
-These are aggregate errors from the local reference experiment, preserved in the
+The 35.1% MAE reduction above is calculated against the previous-week test baseline
+using the unrounded saved scores. The aggregate errors from the local reference
+experiment are preserved in the
 [validation](reports/ml/validation_metrics.csv) and
 [test](reports/ml/test_metrics.csv) tables. They are historical results, with no
 guarantee on current demand. One configuration per model and one validation year
@@ -38,8 +76,6 @@ do not establish a statistically reliable ranking.
 
 Captured from the actual Streamlit application using the reference results.
 
-![Overview: test MAE 78.44 MW, RMSE 117.16 MW and 4,149 origins](docs/images/overview.jpg)
-
 ![Forecast Explorer: 3 February 2020 at 02:00 UTC, observed and predicted demand](docs/images/forecast-explorer.jpg)
 
 The selected forecast has MAE 64.35 MW; overall test MAE remains 78.44 MW.
@@ -47,15 +83,6 @@ The opening origin is closest to the median 24-hour MAE with chronological
 tie-breaking. All 4,149 origins, including high-error forecasts, remain available.
 
 ![Model Performance: held-out test comparison and error by horizon](docs/images/model-performance.jpg)
-
-## Evaluation plots
-
-![Validation MAE and RMSE by model](reports/figures/ml_validation_comparison.png)
-
-![Observed and predicted demand in the predefined test window](reports/figures/ml_test_forecasts.png)
-
-These figures use saved results. The test window follows a calendar and availability
-rule fixed before evaluation. Neither display rule changes the experiment scores.
 
 ## How it works
 
@@ -90,14 +117,25 @@ flowchart LR
 | `api/main.py` | Input validation and four REST endpoints |
 | `tests/` | Controlled tests and optional reference-artifact integration tests |
 
+<details>
+<summary>Evaluation plots from the saved experiment</summary>
+
+![Validation MAE and RMSE by model](reports/figures/ml_validation_comparison.png)
+
+![Observed and predicted demand in the predefined test window](reports/figures/ml_test_forecasts.png)
+
+These figures use saved results. The test window follows a calendar and availability
+rule fixed before evaluation. Neither display rule changes the experiment scores.
+
+</details>
+
 ## Install and test
 
-The reference environment uses Python 3.13.16 on Apple Silicon macOS.
-From the repository root:
+For the API, model reproduction and the complete test suite, activate the same
+Python 3.13 environment and install the full dependencies. The reference
+environment uses Python 3.13.16 on Apple Silicon macOS:
 
 ```bash
-python3.13 -m venv .venv
-source .venv/bin/activate
 python -m pip install -r requirements-all.txt
 python -W error::DeprecationWarning -m unittest discover -s tests -v
 ```
@@ -106,10 +144,11 @@ The historical dashboard and its tests use the included Irish data and forecasts
 Inference integration tests additionally need the large Random Forest model,
 which is distributed as a separate Release asset. Missing-model tests report explicit
 skips; see [verification and scope](docs/PUBLICATION_SCOPE.md) for the actual
-counts. With the local reference model, all 80 tests passed.
+counts. With the verified Release model and a fresh dependency installation,
+all 80 tests passed.
 A clean copy without that model passed 65 tests and explicitly skipped 15 API tests.
-The test dependencies were available locally for preparation; a fresh online
-installation on another machine has not been verified.
+See the [portfolio verification record](docs/PORTFOLIO_VERIFICATION.md) for the
+checks completed during this README update.
 
 ## Reproduce locally with appropriate source access
 
@@ -136,29 +175,33 @@ python -m scripts.report_forecast_results
 python -W error::DeprecationWarning -m unittest discover -s tests -v
 ```
 
+To inspect an independent experiment, run `python -m streamlit run dashboard/app.py`
+from that experiment workspace with the full environment activated.
+
 Training is explicit. The dashboard, API and artifact downloader never start it.
 The source downloader verifies the CSV against OPSD metadata. Allow several
 hundred MB of storage plus training memory. Generated artifacts remain local.
 The permission covers this project within the
 [data terms](docs/DATA_TERMS.md); it does not authorize unrelated European data.
 
-## Run the dashboard and API
+## Run the API
 
-To explore the committed historical forecasts, run from the repository root with
-the environment active. No training or model binary is needed for the dashboard:
+The reference Random Forest is about 161 MiB and is distributed in the
+[v1.0.0 Release](https://github.com/Hugo-bordas/Ireland-Electricity-Demand-Forecasting/releases/tag/v1.0.0).
+From the repository root, install the reviewed reference assets, then check them:
 
 ```bash
-python -m streamlit run dashboard/app.py
+python -m scripts.download_artifacts --profile full --download
+python -m scripts.download_artifacts --profile full --check
 ```
 
-Open `http://127.0.0.1:8501`. The dashboard includes Overview, Forecast Explorer,
-Model Performance and Methodology. It reads saved historical predictions and does
-not provide a live electricity service. After an independent reproduction, run
-the same command from that experiment workspace to inspect its saved results.
+The downloader checks the pinned sizes and SHA-256 digests in the
+[manifest](artifacts/manifest.json). It preserves existing files with different
+contents and never loads a model or starts training. The Release also contains
+`DATA_TERMS.md` and `SHA256SUMS`. Use the recorded dependency versions and reviewed
+joblib assets from the project owner. No hosted API is provided.
 
-For API inference, install the reference model from the Release, or use your
-independently reproduced model. In a second terminal,
-activate the same environment and enter the same project or experiment directory:
+Activate the full environment in the repository root, then start the API:
 
 ```bash
 python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
@@ -171,26 +214,20 @@ python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
 | `GET /historical-forecast?origin_utc=2020-02-03T02:00:00Z` | Local saved forecast for a UTC origin |
 | `POST /predict` | 24 forecasts from exactly 169 consecutive hourly inputs |
 
-Swagger is at `http://127.0.0.1:8000/docs`. Requests require finite nonnegative
-numeric demand, explicit UTC timestamps on whole hours and a final timestamp equal
+Open [Swagger UI](http://127.0.0.1:8000/docs). Try `POST /predict` with the
+included [169-hour example request](data/processed/phase3/example_request.json),
+or send it from another terminal:
+
+```bash
+curl -X POST http://127.0.0.1:8000/predict \
+  -H 'Content-Type: application/json' \
+  --data-binary @data/processed/phase3/example_request.json
+```
+
+Requests require finite nonnegative numeric demand, explicit UTC timestamps on whole hours and a final timestamp equal
 to the origin. The service rejects gaps, duplicates, extra fields and missing
 values. It has no authentication and is intended for local use. Load only trusted
 joblib models; they can execute code during deserialization.
-
-The reference Random Forest is about 161 MiB and is distributed in the
-[v1.0.0 Release](https://github.com/Hugo-bordas/irish-energy-forecast-ai/releases/tag/v1.0.0).
-From the repository root, install the reviewed reference assets, then check them:
-
-```bash
-python -m scripts.download_artifacts --profile full --download
-python -m scripts.download_artifacts --profile full --check
-```
-
-The downloader checks the pinned sizes and SHA-256 digests in the
-[manifest](artifacts/manifest.json). It preserves existing files with different
-contents and never loads a model or starts training. The Release also contains
-`DATA_TERMS.md` and `SHA256SUMS`. Use the recorded dependency versions and reviewed
-joblib assets from the project owner. No hosted service is provided.
 
 ## Limits and licensing
 

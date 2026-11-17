@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "planned_release_tag": "v1.0.0",
-  "repository": "Hugo-bordas/irish-energy-forecast-ai",
+  "repository": "Hugo-bordas/Ireland-Electricity-Demand-Forecasting",
   "distribution_authorized": true,
   "legal_status": "cleared",
   "profiles": {

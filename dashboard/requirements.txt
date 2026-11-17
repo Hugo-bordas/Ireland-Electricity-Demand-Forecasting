@@ -1,0 +1,6 @@
+# Historical dashboard only; no training or model deserialization.
+# Versions match the reference environment.
+numpy==2.5.4
+pandas==2.3.3
+streamlit==1.67.0
+altair==6.3.0

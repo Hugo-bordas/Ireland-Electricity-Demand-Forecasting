@@ -188,7 +188,7 @@ def main():
     elif args.download:
         print("Verified assets installed. No model loaded or trained.")
     else:
-        print("Plan only. No downloads performed; see docs/ARTIFACTS.md for authorization requirements.")
+        print("Plan only. No downloads performed; see docs/PUBLICATION_SCOPE.md for authorization requirements.")
 
 
 if __name__ == "__main__":

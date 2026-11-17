@@ -56,7 +56,7 @@ class ArtifactTests(unittest.TestCase):
         manifest = json.loads(MANIFEST.read_text())
         validate_manifest(manifest)
         self.assertIs(manifest["distribution_authorized"], True)
-        self.assertEqual(manifest["repository"], "Hugo-bordas/irish-energy-forecast-ai")
+        self.assertEqual(manifest["repository"], "Hugo-bordas/Ireland-Electricity-Demand-Forecasting")
         self.assertEqual(manifest["legal_status"], "cleared")
         self.assertEqual(manifest["permission_notice"], "docs/DATA_TERMS.md")
         self.assertIn("non-commercial", manifest["permission_scope"])
