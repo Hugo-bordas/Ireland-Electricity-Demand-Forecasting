@@ -3,7 +3,7 @@
   "planned_release_tag": "v1.0.0",
   "repository": null,
   "distribution_authorized": false,
-  "legal_status": "pending_review",
+  "legal_status": "cleared",
   "profiles": {
     "historical": [
       "historical"
@@ -47,5 +47,7 @@
     "reports/ml/split_counts.csv": "09f0827025f4878b5de3afcc8fb202ef572550b2f59ab42bd2b784b0e8766374",
     "requirements.txt": "1c97889b60f0ce7dbc3f295b73e9c28045e17d6b68df2b520ab32863997f0e1d",
     "reports/phase3_protocol.md": "ce7923f72608f23f08bdc569005d5c87f2d7e175476211286504618b349614f4"
-  }
+  },
+  "permission_scope": "Irish data covered by owner-supplied written EirGrid permission; non-commercial, open-source academic project; attribution and applicable terms required",
+  "permission_notice": "docs/DATA_TERMS.md"
 }

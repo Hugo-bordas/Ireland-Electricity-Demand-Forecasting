@@ -15,10 +15,11 @@ from fastapi.testclient import TestClient
 from api.main import ROOT, create_app
 from scripts.forecast_data import FEATURE_COLUMNS
 from scripts.make_api_example import example_request
+from scripts.explore_data import CSV_PATH
 
 
-@unittest.skipUnless(all((ROOT / name).is_file() for name in ('data/raw/time_series_60min_singleindex.csv', 'data/processed/phase3/test_predictions.csv', 'models/phase3/RandomForest.joblib')),
-                     "Local reference artifacts are not distributed; see README.md")
+@unittest.skipUnless(CSV_PATH.is_file() and all((ROOT / name).is_file() for name in ('data/processed/phase3/test_predictions.csv', 'models/phase3/RandomForest.joblib')),
+                     "Install the reference model Release asset to run inference integration tests; see README.md")
 class APITests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

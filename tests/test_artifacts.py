@@ -57,7 +57,9 @@ class ArtifactTests(unittest.TestCase):
         validate_manifest(manifest)
         self.assertIs(manifest["distribution_authorized"], False)
         self.assertIsNone(manifest["repository"])
-        self.assertEqual(manifest["legal_status"], "pending_review")
+        self.assertEqual(manifest["legal_status"], "cleared")
+        self.assertEqual(manifest["permission_notice"], "docs/DATA_TERMS.md")
+        self.assertIn("non-commercial", manifest["permission_scope"])
         self.assertEqual({item["id"] for item in manifest["files"]}, set(TARGETS))
 
     def test_default_plan_does_not_download_or_create_asset_directories(self):

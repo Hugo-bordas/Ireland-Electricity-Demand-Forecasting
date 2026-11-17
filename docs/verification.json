@@ -1,32 +1,52 @@
 {
   "date": "2026-11-17",
-  "edition": "public-source",
-  "test_environment": "Existing local Python 3.13 environment; no source data or models copied",
-  "tests": {
-    "command": "python -W error::DeprecationWarning -m unittest discover -s tests -v",
+  "edition": "full-irish-reference-prepared-not-published",
+  "permission": "Owner-supplied written response attributed to EirGrid, limited to the Irish data covered by the request for this non-commercial open-source academic project; see DATA_TERMS.md. Evidence kept private.",
+  "tests_with_local_model": {
     "total": 80,
-    "passed": 45,
-    "skipped_reference_artifact_tests": 35,
+    "passed": 80,
+    "skipped": 0,
     "failures": 0,
     "errors": 0,
-    "duration_seconds": 0.446
+    "duration_seconds": 5.63
   },
-  "content_checks": {
-    "copied_implementation_files_unchanged": 21,
-    "no_source_observations_models_forecast_exports_or_media": true,
-    "no_symlinks": true,
-    "secret_pattern_alerts": [],
+  "tests_in_clean_staged_copy_without_model": {
+    "total": 80,
+    "passed": 65,
+    "skipped": 15,
+    "failures": 0,
+    "errors": 0,
+    "duration_seconds": 3.343,
+    "note": "Only API tests needing the large reference model are skipped. Dashboard tests use the committed Irish data and historical forecasts."
+  },
+  "environment": "Existing local Python 3.13.16 environment; no fresh network dependency installation tested",
+  "integrity": {
+    "irish_extract_rows": 50401,
+    "irish_extract_columns": [
+      "utc_timestamp",
+      "IE_load_actual_entsoe_transparency"
+    ],
+    "irish_extract_field_strings_equal_upstream": true,
+    "irish_extract_sha256": "f2f369ab45d6ea7357c518ec0ee47ceb76e574979da1bd3b0be124e590b04f4b",
+    "line_endings": "LF; original CSV field strings and missing values preserved",
+    "three_reference_assets_size_and_sha256_checked": true,
+    "model_or_european_csv_in_git": false,
+    "private_permission_evidence_in_git": false,
     "broken_local_links": [],
-    "new_history_without_original_commits": true
+    "secret_pattern_alerts": [],
+    "symlinks": []
   },
   "links": {
-    "method": "HTTP HEAD",
-    "checked": 17,
-    "http_200": 16,
+    "checked": 18,
+    "http_200": 17,
     "note": "ENTSO-E legal page returned automated HTTP 403; it was separately read with web browsing.",
     "results": [
       {
         "url": "https://data.open-power-system-data.org/time_series/2020-10-06",
+        "status": 200
+      },
+      {
+        "url": "https://data.open-power-system-data.org/time_series/2020-10-06/README.md",
         "status": 200
       },
       {
@@ -86,14 +106,14 @@
         "status": 200
       },
       {
-        "url": "https://open-power-system-data.org/legal/",
-        "status": 200
-      },
-      {
         "url": "https://transparencyplatform.zendesk.com/hc/en-us/articles/40921911218961-Legal-Terms-and-Conditions",
         "error": "HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://www.smartgriddashboard.com/all/open-data-license/",
+        "status": 200
       }
     ]
   },
-  "publication": "Not published; owner confirmation required"
+  "publication": "Owner confirmation pending. No remote, push, tag or Release created. Downloads remain disabled."
 }

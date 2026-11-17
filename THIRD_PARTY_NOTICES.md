@@ -35,14 +35,15 @@ the transitive numerical/plotting packages used by the recorded ML experiment.
 API/UI transitive dependencies are resolved by the installer; this repository
 does not claim a cross-platform, fully locked dependency graph.
 
-## OPSD / ENTSO-E data
+## Irish source data and model assets
 
-Attribution: Open Power System Data (2020), *Data Package Time series*, version
-2020-10-06, https://doi.org/10.25832/time_series/2020-10-06. Primary measurements:
-ENTSO-E Transparency. No endorsement is implied.
+Supported by EirGrid Group Data. Original source: EirGrid; publication source:
+ENTSO-E Transparency. Data package: Open Power System Data (2020), *Data Package
+Time series*, version 2020-10-06, https://doi.org/10.25832/time_series/2020-10-06.
+No endorsement is implied.
 
-This source edition includes no third-party measurements, trained model binaries,
-per-origin forecast exports, figures or screenshots. Aggregate evaluation metrics
-and experiment configuration describe the author's local experiment. The code
-license does not grant rights over the underlying data. See `data/SOURCES.md` and
-`docs/PUBLICATION_SCOPE.md` for the scope and source links.
+The owner supplied permission for the Irish data, visualizations, trained models
+and forecasts in this non-commercial, open-source academic project. The MIT code
+license does not relicense those materials. See [data terms](docs/DATA_TERMS.md)
+for scope, required credit and the limits of that permission. The European source
+CSV and private correspondence are not distributed.

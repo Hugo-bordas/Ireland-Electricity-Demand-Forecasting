@@ -7,10 +7,13 @@ A personal engineering project developed during an exchange at Dublin City
 University, following studies at ECE Bordeaux. The project focuses on avoiding
 future-data leakage and reusing saved models across an interface and an API.
 
-This public source edition contains original code, tests, the experiment protocol,
-model configuration and aggregate error metrics. Source measurements, trained
-models, individual forecast outputs, charts and screenshots are kept outside this
-repository. The dashboard and prediction endpoints require local artifacts.
+Supported by EirGrid Group Data.
+
+This non-commercial academic project includes the Irish historical dataset, saved
+test forecasts, real dashboard screenshots and the original implementation.
+EirGrid permission supplied by the owner expressly covers those materials and the
+trained models for this project. See [data terms](docs/DATA_TERMS.md). The code is
+MIT; that license does not relicense the data or model assets.
 
 ## Reference results
 
@@ -30,6 +33,29 @@ These are aggregate errors from the local reference experiment, preserved in the
 [test](reports/ml/test_metrics.csv) tables. They are historical results, with no
 guarantee on current demand. One configuration per model and one validation year
 do not establish a statistically reliable ranking.
+
+## Dashboard screenshots
+
+Captured from the actual Streamlit application using the reference results.
+
+![Overview: test MAE 78.44 MW, RMSE 117.16 MW and 4,149 origins](docs/images/overview.jpg)
+
+![Forecast Explorer: 3 February 2020 at 02:00 UTC, observed and predicted demand](docs/images/forecast-explorer.jpg)
+
+The selected forecast has MAE 64.35 MW; overall test MAE remains 78.44 MW.
+The opening origin is closest to the median 24-hour MAE with chronological
+tie-breaking. All 4,149 origins, including high-error forecasts, remain available.
+
+![Model Performance: held-out test comparison and error by horizon](docs/images/model-performance.jpg)
+
+## Evaluation plots
+
+![Validation MAE and RMSE by model](reports/figures/ml_validation_comparison.png)
+
+![Observed and predicted demand in the predefined test window](reports/figures/ml_test_forecasts.png)
+
+These figures use saved results. The test window follows a calendar and availability
+rule fixed before evaluation. Neither display rule changes the experiment scores.
 
 ## How it works
 
@@ -76,10 +102,12 @@ python -m pip install -r requirements-all.txt
 python -W error::DeprecationWarning -m unittest discover -s tests -v
 ```
 
-Controlled tests run without source data or model downloads. Tests requiring
-reference data report explicit skips in this edition. Those skips are not evidence
-that inference or the complete dashboard worked in a fresh clone. See
-[verification and scope](docs/PUBLICATION_SCOPE.md) for the actual counts.
+The historical dashboard and its tests use the included Irish data and forecasts.
+Inference integration tests additionally need the large Random Forest model,
+which is planned as a separate Release asset. Missing-model tests report explicit
+skips; see
+[verification and scope](docs/PUBLICATION_SCOPE.md) for the actual counts. With the local reference model, all 80 tests passed.
+A clean copy without that model passed 65 tests and explicitly skipped 15 API tests.
 The test dependencies were available locally for preparation; a fresh online
 installation on another machine has not been verified.
 
@@ -110,12 +138,13 @@ python -W error::DeprecationWarning -m unittest discover -s tests -v
 
 Training is explicit. The dashboard, API and artifact downloader never start it.
 The source downloader verifies the CSV against OPSD metadata. Allow several
-hundred MB of storage plus training memory. Generated artifacts remain local and
-must not be added to a public repository without checking their rights.
+hundred MB of storage plus training memory. Generated artifacts remain local. The permission covers this project within the
+[data terms](docs/DATA_TERMS.md); it does not authorize unrelated European data.
 
 ## Run the dashboard and API
 
-After reproduction, stay in the experiment workspace with the environment active:
+To explore the committed historical forecasts, run from the repository root with
+the environment active. No training or model binary is needed for the dashboard:
 
 ```bash
 python -m streamlit run dashboard/app.py
@@ -123,10 +152,12 @@ python -m streamlit run dashboard/app.py
 
 Open `http://127.0.0.1:8501`. The dashboard includes Overview, Forecast Explorer,
 Model Performance and Methodology. It reads saved historical predictions and does
-not provide a live electricity service. With this source edition alone, it reports
-missing artifacts instead of displaying a demonstration.
+not provide a live electricity service. After an independent reproduction, run
+the same command from that experiment workspace to inspect its saved results.
 
-In a second terminal, activate the same environment and enter the same experiment:
+For API inference, install the reference model after an approved Release is
+available, or use your independently reproduced model. In a second terminal,
+activate the same environment and enter the same project or experiment directory:
 
 ```bash
 python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
@@ -145,9 +176,19 @@ to the origin. The service rejects gaps, duplicates, extra fields and missing
 values. It has no authentication and is intended for local use. Load only trusted
 joblib models; they can execute code during deserialization.
 
-No pretrained download or hosted demonstration is available. The experimental
-[artifact manifest](artifacts/manifest.json) and downloader remain disabled for
-network downloads because distribution has not been approved.
+The reference Random Forest is about 161 MiB and is planned as a separate
+`v1.0.0` Release asset. No Release or hosted service exists yet. Publication still
+requires owner confirmation; the [manifest](artifacts/manifest.json) therefore
+keeps downloads disabled. Plan or verify existing local assets with:
+
+```bash
+python -m scripts.download_artifacts --profile full
+python -m scripts.download_artifacts --profile full --check
+```
+
+Once an approved Release and its matching manifest exist, the download command is
+`python -m scripts.download_artifacts --profile full --download`. That command is
+currently blocked. Use only reviewed joblib assets from the project owner.
 
 ## Limits and licensing
 
@@ -157,7 +198,10 @@ simulated. Weather, Irish holidays, local daylight-saving time and prediction
 intervals are outside this version.
 
 Original code and documentation use the [MIT license](LICENSE). Dependencies
-retain their [own licenses](THIRD_PARTY_NOTICES.md). That license grants no rights
-over OPSD/ENTSO-E measurements. This edition redistributes aggregate evaluation
-statistics and configuration, with no source observations, model binaries or
-source-data visuals. See [publication scope](docs/PUBLICATION_SCOPE.md).
+retain their [own licenses](THIRD_PARTY_NOTICES.md). Data, their visual
+representations and model assets have separate conditions.
+The owner-supplied EirGrid permission covers the stated Irish data and outputs for
+this non-commercial, open-source academic project. Preserve attribution and
+applicable terms; no commercial reuse right is claimed. The multi-country OPSD
+CSV is excluded. See [data terms](docs/DATA_TERMS.md) and
+[publication scope](docs/PUBLICATION_SCOPE.md).

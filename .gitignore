@@ -5,7 +5,11 @@ __pycache__/
 .cache/
 data/raw/*
 !data/raw/.gitkeep
-data/processed/
+data/processed/*
+!data/processed/phase3/
+data/processed/phase3/*
+!data/processed/phase3/test_predictions.csv
+!data/processed/phase3/example_request.json
 models/
 /.reproductions/
 .pytest_cache/
@@ -31,27 +35,12 @@ dist/
 .idea/
 .vscode/
 
-# Public source edition: keep all generated observations, outputs and media local.
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.webp
-*.svg
-*.pdf
-*.zip
-*.tar
-*.gz
-/reports/*
-!/reports/phase3_protocol.md
-!/reports/ml/
-/reports/ml/*
-!/reports/ml/selection.json
-!/reports/ml/split_counts.csv
-!/reports/ml/test_by_horizon.csv
-!/reports/ml/test_completion.json
-!/reports/ml/test_evaluation_started.json
-!/reports/ml/test_metrics.csv
-!/reports/ml/training_config.json
-!/reports/ml/validation_by_horizon.csv
-!/reports/ml/validation_metrics.csv
+# Only reviewed Irish observations and reference exports are committed.
+/release-assets/
+/private-permissions/
+/reports/tables/
+/reports/exploration.txt
+/reports/patterns.txt
+/reports/preparation.txt
+/reports/ml/forecast_example.txt
+/reports/ml/test_results.txt

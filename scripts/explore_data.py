@@ -16,7 +16,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-CSV_PATH = ROOT / "data" / "raw" / "time_series_60min_singleindex.csv"
+IRISH_CSV = ROOT / "data" / "irish" / "irish_demand_hourly.csv"
+CSV_PATH = IRISH_CSV if IRISH_CSV.is_file() else ROOT / "data" / "raw" / "time_series_60min_singleindex.csv"
 LOAD_COLUMN = "IE_load_actual_entsoe_transparency"
 
 

@@ -9,12 +9,14 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
+from scripts.explore_data import CSV_PATH
+
 from dashboard.data import (MODEL, ROOT, forecast_table, load_results, representative_origin,
                             select_forecast, validate_predictions)
 
 
-@unittest.skipUnless(all((ROOT / name).is_file() for name in ('data/raw/time_series_60min_singleindex.csv', 'data/processed/phase3/test_predictions.csv')),
-                     "Local reference artifacts are not distributed; see README.md")
+@unittest.skipUnless(CSV_PATH.is_file() and (ROOT / 'data/processed/phase3/test_predictions.csv').is_file(),
+                     "Install the reference model Release asset to run inference integration tests; see README.md")
 class DashboardDataTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -82,7 +84,7 @@ class DashboardDataTests(unittest.TestCase):
     def test_high_error_example_remains_available_and_matches_raw_observations(self):
         origin = pd.Timestamp("2020-01-02T02:00:00Z")
         forecast = select_forecast(self.predictions, origin)
-        raw = pd.read_csv(ROOT / "data/raw/time_series_60min_singleindex.csv",
+        raw = pd.read_csv(CSV_PATH,
                           usecols=["utc_timestamp", "IE_load_actual_entsoe_transparency"])
         raw.index = pd.to_datetime(raw.utc_timestamp, utc=True)
         np.testing.assert_array_equal(forecast.observed_mw,
@@ -105,7 +107,7 @@ HAS_STREAMLIT = importlib.util.find_spec("streamlit") is not None
 
 
 @unittest.skipUnless((ROOT / "data/processed/phase3/test_predictions.csv").is_file(),
-                     "Local reference predictions are not distributed; see README.md")
+                     "Reference historical predictions are missing; see README.md")
 @unittest.skipUnless(HAS_STREAMLIT, "Install requirements-dashboard.txt to run Streamlit interaction tests")
 class DashboardAppTests(unittest.TestCase):
     def setUp(self):
