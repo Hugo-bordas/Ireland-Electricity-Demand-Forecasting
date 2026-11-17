@@ -1,5 +1,6 @@
 """Historical energy analytics. Run: python -m streamlit run dashboard/app.py"""
 
+import logging
 import sys
 from importlib import reload
 from pathlib import Path
@@ -28,6 +29,7 @@ NAVY, TEAL, BLUE, CORAL = "#172B4D", "#128C80", "#3979C6", "#E87C67"
 COLORS = {"Observed": NAVY, "Random Forest": TEAL, "Previous day": "#74849A",
           "Previous week": BLUE, "Ridge": "#A84C3E", "HistGradientBoosting": NAVY}
 SECTIONS = ["Overview", "Forecast Explorer", "Model Performance", "Methodology"]
+logger = logging.getLogger(__name__)
 
 
 @st.cache_data(ttl=60, show_spinner="Loading historical results…")
@@ -307,9 +309,10 @@ def main():
         data = cached_results()
         {SECTIONS[0]: overview, SECTIONS[1]: explorer, SECTIONS[2]: performance,
          SECTIONS[3]: methodology}[section](data)
-    except (OSError, ValueError, KeyError, TypeError) as error:
-        st.error(f"Unable to display the historical results: {error}")
-        st.info("Check the phase 3 artifacts listed in the README. No model has been trained or evaluated.")
+    except (OSError, ValueError, KeyError, TypeError):
+        logger.exception("Historical dashboard artifacts could not be displayed")
+        st.error("Historical results are temporarily unavailable. Please try again later.")
+        st.info("The app requires its saved forecast and metric files. No model has been trained or evaluated.")
         st.stop()
 
 

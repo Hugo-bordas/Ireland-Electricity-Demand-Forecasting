@@ -17,5 +17,4 @@ primaryColor = "#128C80"
 gatherUsageStats = false
 
 [server]
-address = "127.0.0.1"
 headless = true

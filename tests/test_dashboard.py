@@ -173,14 +173,18 @@ class DashboardAppTests(unittest.TestCase):
         self.assertEqual(len(self.app.dataframe[0].value), 5)
 
     def test_missing_file_is_reported_in_the_interface(self):
-        with patch("dashboard.data.pd.read_csv", side_effect=FileNotFoundError("Missing test_predictions.csv")):
+        with patch("dashboard.data.pd.read_csv", side_effect=FileNotFoundError("/private/internal/test_predictions.csv")), \
+             patch("logging.Logger.exception") as log:
             # Clear the cache to exercise a fresh startup failure.
             import streamlit as st
             st.cache_data.clear()
             self.app.run()
         self.assertEqual(len(self.app.exception), 0)
         self.assertGreater(len(self.app.error), 0)
-        self.assertIn("Missing test_predictions.csv", self.app.error[0].value)
+        self.assertIn("temporarily unavailable", self.app.error[0].value)
+        self.assertNotIn("/private", self.app.error[0].value)
+        self.assertNotIn("/private", self.app.info[0].value)
+        log.assert_called_once()
 
     def test_export_payload_equals_displayed_rows_for_high_error_origin(self):
         import streamlit as st

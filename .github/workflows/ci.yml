@@ -1,0 +1,29 @@
+name: Tests and saved results
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - name: Install dependencies
+        run: python -m pip install -r requirements-all.txt
+      - name: Verify historical artifact integrity
+        run: python -m scripts.download_artifacts --profile historical --check
+      - name: Recompute saved test metrics
+        run: python -m scripts.verify_results
+      - name: Run tests without the optional Release model
+        run: python -W error::DeprecationWarning -m unittest discover -s tests -v
