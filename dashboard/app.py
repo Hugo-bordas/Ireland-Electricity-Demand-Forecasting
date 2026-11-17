@@ -305,6 +305,9 @@ def main():
         st.divider()
         st.write("Random Forest")
         st.caption("Historical test\n\nJanuary–June 2020\n\nSaved forecasts only")
+        st.divider()
+        st.caption("Supported by EirGrid Group Data.")
+        st.caption("Source: OPSD 2020-10-06 / ENTSO-E Transparency. No endorsement implied.")
     try:
         data = cached_results()
         {SECTIONS[0]: overview, SECTIONS[1]: explorer, SECTIONS[2]: performance,
