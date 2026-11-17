@@ -1,7 +1,7 @@
-# Prepared publication scope
+# Publication scope
 
-Prepared on 17 November 2026. Nothing has been published. The owner's separate
-confirmation is required before GitHub repository creation, push or Release.
+The owner approved public GitHub publication and the v1.0.0 Release on
+17 November 2026. This approval covers the repository and assets listed below.
 
 ## Git repository
 
@@ -16,18 +16,20 @@ The owner-supplied EirGrid response explicitly covers the stated Irish dataset,
 derived visuals, model training and public sharing of trained models and forecasts.
 The private permission image is not included in this repository.
 
-## Planned Release
+## Reference Release
 
-`v1.0.0` is a proposed tag, not a published Release. Its reviewed local assets are
-`RandomForest.joblib`, `test_predictions.csv`, `example_request.json` and
-`DATA_TERMS.md` and `SHA256SUMS`. Sizes and SHA-256 digests of the three installable assets are in
+The [v1.0.0 Release](https://github.com/Hugo-bordas/irish-energy-forecast-ai/releases/tag/v1.0.0)
+contains the reviewed assets
+`RandomForest.joblib`, `test_predictions.csv`, `example_request.json`,
+`DATA_TERMS.md` and `SHA256SUMS`. Sizes and SHA-256 digests of the three installable
+assets are in
 [the manifest](../artifacts/manifest.json). The model is about 161 MiB and remains
-outside Git. It has not been uploaded. The terms accompany the assets.
+outside Git. The terms accompany the assets.
 
 The manifest's legal review is recorded as cleared within the supplied permission's
-scope. Owner distribution authorization remains false and repository remains
-unset until publication is approved. Network downloads therefore remain disabled.
-The downloader does not load models or train them.
+scope. The owner authorized distribution from `Hugo-bordas/irish-energy-forecast-ai`
+at the pinned tag `v1.0.0`. The downloader verifies the reference assets and metadata;
+it does not load models or train them.
 
 ## Excluded
 

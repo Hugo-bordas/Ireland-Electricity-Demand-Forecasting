@@ -49,5 +49,6 @@ Reference links:
 - [ENTSO-E terms and reuse lists](https://transparencyplatform.zendesk.com/hc/en-us/articles/40921911218961-Legal-Terms-and-Conditions)
 - [OPSD package documentation](https://data.open-power-system-data.org/time_series/2020-10-06/README.md)
 
-Publication by the project owner remains a separate approval step. Preparing a
-local file or setting the legal-review status does not authorize an upload.
+The project owner approved public GitHub publication and the v1.0.0 model Release
+on 17 November 2026. That approval does not expand the data permission beyond the
+stated non-commercial academic project.

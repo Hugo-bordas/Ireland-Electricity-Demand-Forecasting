@@ -52,11 +52,11 @@ class ArtifactTests(unittest.TestCase):
             return Response(alter(data) if alter else data)
         return Mock(open=Mock(side_effect=open_response))
 
-    def test_committed_manifest_is_a_disabled_complete_plan(self):
+    def test_committed_manifest_is_a_pinned_authorized_release(self):
         manifest = json.loads(MANIFEST.read_text())
         validate_manifest(manifest)
-        self.assertIs(manifest["distribution_authorized"], False)
-        self.assertIsNone(manifest["repository"])
+        self.assertIs(manifest["distribution_authorized"], True)
+        self.assertEqual(manifest["repository"], "Hugo-bordas/irish-energy-forecast-ai")
         self.assertEqual(manifest["legal_status"], "cleared")
         self.assertEqual(manifest["permission_notice"], "docs/DATA_TERMS.md")
         self.assertIn("non-commercial", manifest["permission_scope"])

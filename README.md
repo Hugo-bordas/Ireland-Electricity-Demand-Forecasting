@@ -104,9 +104,9 @@ python -W error::DeprecationWarning -m unittest discover -s tests -v
 
 The historical dashboard and its tests use the included Irish data and forecasts.
 Inference integration tests additionally need the large Random Forest model,
-which is planned as a separate Release asset. Missing-model tests report explicit
-skips; see
-[verification and scope](docs/PUBLICATION_SCOPE.md) for the actual counts. With the local reference model, all 80 tests passed.
+which is distributed as a separate Release asset. Missing-model tests report explicit
+skips; see [verification and scope](docs/PUBLICATION_SCOPE.md) for the actual
+counts. With the local reference model, all 80 tests passed.
 A clean copy without that model passed 65 tests and explicitly skipped 15 API tests.
 The test dependencies were available locally for preparation; a fresh online
 installation on another machine has not been verified.
@@ -138,7 +138,8 @@ python -W error::DeprecationWarning -m unittest discover -s tests -v
 
 Training is explicit. The dashboard, API and artifact downloader never start it.
 The source downloader verifies the CSV against OPSD metadata. Allow several
-hundred MB of storage plus training memory. Generated artifacts remain local. The permission covers this project within the
+hundred MB of storage plus training memory. Generated artifacts remain local.
+The permission covers this project within the
 [data terms](docs/DATA_TERMS.md); it does not authorize unrelated European data.
 
 ## Run the dashboard and API
@@ -155,8 +156,8 @@ Model Performance and Methodology. It reads saved historical predictions and doe
 not provide a live electricity service. After an independent reproduction, run
 the same command from that experiment workspace to inspect its saved results.
 
-For API inference, install the reference model after an approved Release is
-available, or use your independently reproduced model. In a second terminal,
+For API inference, install the reference model from the Release, or use your
+independently reproduced model. In a second terminal,
 activate the same environment and enter the same project or experiment directory:
 
 ```bash
@@ -176,19 +177,20 @@ to the origin. The service rejects gaps, duplicates, extra fields and missing
 values. It has no authentication and is intended for local use. Load only trusted
 joblib models; they can execute code during deserialization.
 
-The reference Random Forest is about 161 MiB and is planned as a separate
-`v1.0.0` Release asset. No Release or hosted service exists yet. Publication still
-requires owner confirmation; the [manifest](artifacts/manifest.json) therefore
-keeps downloads disabled. Plan or verify existing local assets with:
+The reference Random Forest is about 161 MiB and is distributed in the
+[v1.0.0 Release](https://github.com/Hugo-bordas/irish-energy-forecast-ai/releases/tag/v1.0.0).
+From the repository root, install the reviewed reference assets, then check them:
 
 ```bash
-python -m scripts.download_artifacts --profile full
+python -m scripts.download_artifacts --profile full --download
 python -m scripts.download_artifacts --profile full --check
 ```
 
-Once an approved Release and its matching manifest exist, the download command is
-`python -m scripts.download_artifacts --profile full --download`. That command is
-currently blocked. Use only reviewed joblib assets from the project owner.
+The downloader checks the pinned sizes and SHA-256 digests in the
+[manifest](artifacts/manifest.json). It preserves existing files with different
+contents and never loads a model or starts training. The Release also contains
+`DATA_TERMS.md` and `SHA256SUMS`. Use the recorded dependency versions and reviewed
+joblib assets from the project owner. No hosted service is provided.
 
 ## Limits and licensing
 

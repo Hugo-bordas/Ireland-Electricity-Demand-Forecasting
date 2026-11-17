@@ -1,6 +1,6 @@
 {
   "date": "2026-11-17",
-  "edition": "full-irish-reference-prepared-not-published",
+  "edition": "full-irish-reference",
   "permission": "Owner-supplied written response attributed to EirGrid, limited to the Irish data covered by the request for this non-commercial open-source academic project; see DATA_TERMS.md. Evidence kept private.",
   "tests_with_local_model": {
     "total": 80,
@@ -8,7 +8,7 @@
     "skipped": 0,
     "failures": 0,
     "errors": 0,
-    "duration_seconds": 5.63
+    "duration_seconds": 5.767
   },
   "tests_in_clean_staged_copy_without_model": {
     "total": 80,
@@ -115,5 +115,5 @@
       }
     ]
   },
-  "publication": "Owner confirmation pending. No remote, push, tag or Release created. Downloads remain disabled."
+  "publication": "Owner approved public repository and v1.0.0 Release on 2026-11-17. Repository: https://github.com/Hugo-bordas/irish-energy-forecast-ai ; release: https://github.com/Hugo-bordas/irish-energy-forecast-ai/releases/tag/v1.0.0"
 }
