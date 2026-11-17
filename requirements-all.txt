@@ -1,0 +1,3 @@
+# Complete local development environment: ML, dashboard, API and tests.
+-r requirements-dashboard.txt
+-r requirements-api.txt

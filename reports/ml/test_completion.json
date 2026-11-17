@@ -1,0 +1,23 @@
+{
+  "completed_utc": "2026-11-16T18:03:35.197197+00:00",
+  "n_origins": 4149,
+  "metrics": [
+    {
+      "model": "RandomForest",
+      "mae_mw": 78.4396423739622,
+      "rmse_mw": 117.15723636284176
+    },
+    {
+      "model": "DailyBaseline",
+      "mae_mw": 144.04442837631558,
+      "rmse_mw": 219.97067873216196
+    },
+    {
+      "model": "WeeklyBaseline",
+      "mae_mw": 120.92596609624809,
+      "rmse_mw": 174.18269429136794
+    }
+  ],
+  "selected_model": "RandomForest",
+  "model_sha256": "8dd305414a21fa30d2d812e177f9fcad3a13fd27b3274a2fcc144f8f6ff12ad9"
+}

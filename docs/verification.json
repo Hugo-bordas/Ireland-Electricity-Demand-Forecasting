@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-17",
+  "edition": "public-source",
+  "test_environment": "Existing local Python 3.13 environment; no source data or models copied",
+  "tests": {
+    "command": "python -W error::DeprecationWarning -m unittest discover -s tests -v",
+    "total": 80,
+    "passed": 45,
+    "skipped_reference_artifact_tests": 35,
+    "failures": 0,
+    "errors": 0,
+    "duration_seconds": 0.446
+  },
+  "content_checks": {
+    "copied_implementation_files_unchanged": 21,
+    "no_source_observations_models_forecast_exports_or_media": true,
+    "no_symlinks": true,
+    "secret_pattern_alerts": [],
+    "broken_local_links": [],
+    "new_history_without_original_commits": true
+  },
+  "links": {
+    "method": "HTTP HEAD",
+    "checked": 17,
+    "http_200": 16,
+    "note": "ENTSO-E legal page returned automated HTTP 403; it was separately read with web browsing.",
+    "results": [
+      {
+        "url": "https://data.open-power-system-data.org/time_series/2020-10-06",
+        "status": 200
+      },
+      {
+        "url": "https://doi.org/10.25832/time_series/2020-10-06",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/Kludex/starlette/blob/main/LICENSE.md",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/Kludex/uvicorn/blob/main/LICENSE.md",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/encode/httpx/blob/master/LICENSE.md",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/fastapi/fastapi/blob/master/LICENSE",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/joblib/joblib/blob/main/LICENSE.txt",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/pandas-dev/pandas/blob/main/LICENSE",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/pydantic/pydantic/blob/main/LICENSE",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/scikit-learn/scikit-learn/blob/main/COPYING",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/scipy/scipy/blob/main/LICENSE.txt",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/streamlit/streamlit/blob/develop/LICENSE",
+        "status": 200
+      },
+      {
+        "url": "https://github.com/vega/altair/blob/main/LICENSE",
+        "status": 200
+      },
+      {
+        "url": "https://matplotlib.org/stable/project/license.html",
+        "status": 200
+      },
+      {
+        "url": "https://numpy.org/doc/stable/license.html",
+        "status": 200
+      },
+      {
+        "url": "https://open-power-system-data.org/legal/",
+        "status": 200
+      },
+      {
+        "url": "https://transparencyplatform.zendesk.com/hc/en-us/articles/40921911218961-Legal-Terms-and-Conditions",
+        "error": "HTTP Error 403: Forbidden"
+      }
+    ]
+  },
+  "publication": "Not published; owner confirmation required"
+}
